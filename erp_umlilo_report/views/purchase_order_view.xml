@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+		<record id="custom_purchase_order_extended_form" model="ir.ui.view">
+			<field name="name">purchase.order.extend.form</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form" />
+			<field name="arch" type="xml">
+				<xpath expr="/form/header/button[@string='Print RFQ']" position="replace">
+					<button name="print_quotation" string="Print RFQ" type="object" states="draft" class="oe_highlight" groups="base.group_user"/>
+				</xpath>
+				<xpath expr="/form/sheet/group/group/field[@name='currency_id']" position='after'>
+					<field name="x_job_number"/>
+				</xpath>
+			</field>
+		</record>
+		
+		
+	</data>
+</openerp>

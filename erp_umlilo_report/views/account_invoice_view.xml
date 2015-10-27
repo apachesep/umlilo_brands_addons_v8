@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+		<record id="account_invoice_extend_form" model="ir.ui.view">
+			<field name="name">account.supplier.invoice.extend.form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='period_id']" position="after">
+					<field name="dispatch_type"/>
+				</xpath>
+				<xpath expr="/form/sheet/group/group/field[@name='supplier_invoice_number']" position="after">
+					<field name="x_job_number"/>
+				</xpath>
+			</field>
+		</record>
+		
+		
+		<record id="customer_invoice_form_extended" model="ir.ui.view">
+			<field name="name">account.customer.invoice.extend.form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="arch" type="xml">
+				<xpath expr="/form/header/button[@string='Print']" position="replace">
+					<button name="invoice_print" string="Print" type="object" attrs="{'invisible':['|',('sent','=',True), ('state', '!=', 'open')]}" class="oe_highlight" groups="base.group_user"/>
+				</xpath>
+				<xpath expr="/form/sheet/group/group/field[@name='fiscal_position']" position="after">
+					<field name="x_job_number"/>
+					<field name="customer_po_no"/>
+				</xpath>
+			</field>
+		</record>
+		
+		
+	</data>
+</openerp>

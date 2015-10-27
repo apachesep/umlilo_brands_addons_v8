@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="custom_paperformat" model="report.paperformat">
+			<field name="name">European A4</field>
+			<field name="default" eval="True" />
+			<field name="format">A4</field>
+			<field name="page_height">0</field>
+			<field name="page_width">0</field>
+			<field name="orientation">Landscape</field>
+			<field name="margin_top">60</field>
+			<field name="margin_bottom">5</field>
+			<field name="margin_left">7</field>
+			<field name="margin_right">7</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">58</field>
+			<field name="dpi">90</field>
+		</record>
+
+		<report id="sale.report_sale_order" string="Sale Order"
+			model="sale.order" report_type="qweb-pdf"
+			file="erp_umlilo_report.custom_sale_order_template_id" name="erp_umlilo_report.custom_sale_order_template_id" />
+
+		<record id="sale.report_sale_order" model="ir.actions.report.xml">
+			<field name="paperformat_id" ref="erp_umlilo_report.custom_paperformat" />
+		</record>
+	</data>
+</openerp>

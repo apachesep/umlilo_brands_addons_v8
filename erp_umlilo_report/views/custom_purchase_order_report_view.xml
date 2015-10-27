@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="custom_purchase_order_report_template_id">
+			<t t-call="erp_umlilo_report.custom_purchase_order_template_id">
+				<div class="page">
+					<t t-foreach="docs" t-as="o">
+						<p style="font-size:13;margin-top:15px;">We take pleasure in submitting our quotation below.
+							If you have any queries please do not hesitate to contact us.</p>
+						<div class="row" style="min-height:400px;">
+							<table class="table" style="font-size:13;border:1px solid black;border-collapse:collapse;" width="100%">
+				                <thead>
+				                    <tr>
+				                        <th style="border:1px solid black;" width="3%">POS</th>
+				                        <th style="border:1px solid black;" width="10%">Product Code</th>
+				                        <th style="border:1px solid black;">Product Description</th>
+				                        <th style="border:1px solid black;" class="text-center" width="8%">Width</th>
+				                        <th style="border:1px solid black;" class="text-center" width="8%">Height</th>
+				                        <th style="border:1px solid black;" class="text-center" width="8%">Quantity</th>
+				                        <th style="border:1px solid black;" class="text-center" width="8%">Unit Price</th>
+<!--				                        <th style="border:1px solid black;" class="text-center" width="8%">Discount</th> -->
+				                        <th style="border:1px solid black;" class="text-center" width="12%">Sub Total Ex VAT </th>
+				                    </tr>
+				               </thead>
+				               <tbody class="sale_tbody">
+				               		<t t-set="i" t-value="00"/>
+				                    <tr t-foreach="o.order_line" t-as="l">
+				                    	<t t-set="i" t-value="i+1"/>
+				                    	<td style="border:1px solid black;" class="text-center">
+				                    		<span t-esc="i"/>
+				                    	</td>
+				                    	<td style="border:1px solid black;">
+				                    		<span t-field="l.product_id.default_code"/>
+				                    	</td>
+				                        <td style="border:1px solid black;">
+				                           <span t-field="l.name"/>
+				                        </td>
+				                        <td style="border:1px solid black;" class="text-center">
+				                           <span t-esc="get_width(l)"/>
+				                        </td>
+				                        <td style="border:1px solid black;" class="text-center">
+				                           <span t-esc="get_height(l)"/>
+				                        </td>
+				                        <td style="border:1px solid black;" class="text-center">
+				                            <span t-esc="get_qty_format(l)"/>
+				                        </td>
+				                        <td style="border:1px solid black;">
+				                        	<span class="pull-left" t-field="o.currency_id.symbol"/>
+				                            <span class="pull-right" t-field="l.price_unit"/>
+				                        </td>
+<!--				                        <td style="border:1px solid black;" class="text-center" groups="sale.group_discount_per_so_line">
+				                            <span t-field="l.discount"/>%   
+				                        </td> -->
+				                        <td style="border:1px solid black;">
+				                        	<span class="pull-left" t-field="o.currency_id.symbol"/>
+				                            <span class="pull-right" t-field="l.price_subtotal"/>
+				                        </td>
+				                    </tr>
+				                </tbody>
+				            </table>
+				    	</div>
+				    	<strong><p style="color:red;font-size:15" class="text-center">Order is payable in Rand (ZAR) directly to: FIRST NATIONAL BANK Account Number: 6242 663 0241 Durban North Branch : 221426 Swift Code : FIRNZAGG</p></strong>
+			            <div class="row">
+			            	<table width="100%">
+
+			            		<td width="65%" style="border:1px solid black;">
+									<div class="row" style="margin-left:8px;font-size:14;">
+										<span><b>Terms &amp; Conditions:</b></span><br/>
+										<span>This Quotation / Estimate is valid for 7 days from the date of issue and is subject to the detailed Terms &amp; Conditions available</span><br/>
+									    <span>on the reverse of this document or at http://www.umlilobrands.co.za/detailed_terms.html</span><br/>
+									    <span>All pricing quoted is subject to exchange rate fluctuations and stock availability at confirmation of order. This quotation is only</span><br/>
+									    <span>considered accepted once signed and returned to Umlilo Brands in writing and a 50% deposit is paid or order number is supplied.</span><br/>
+									    <span>If the payment terms above are COD (Cash on Delivery) full payment will be required before the good are dispatched.</span><br/>
+									    <span>This is a Quotation and not a contract to supply any goods or services. E &amp; O. E.</span><br/>
+									</div>
+									<div class="row" style="margin-left:5px;margin-top:10px;">
+										<div class="col-xs-7">
+											<table>
+												<tr>
+													<td>Accepted by :</td>
+													<td width="40%" style="border-bottom:1px solid black;"></td>
+													<td>Full Name &amp; Duly Appointed </td>
+												</tr>
+											</table>
+										</div>
+										<div class="col-xs-5">
+											<table>
+												<tr>
+													<td>Signature :</td>
+													<td width="33%" style="border-bottom:1px solid black;"></td>
+													<td>Date :</td>
+													<td width="33%" style="border-bottom:1px solid black;"></td>
+												</tr>
+											</table>
+										</div>
+									</div>
+									<span style="font-size:5;"><font color="white">.</font></span>
+			            		</td>
+
+			            		<td width="2%"><font color="white">.</font></td>
+
+			            		<td width="33%" style="border:1px solid black;">
+			            			<div class="row" style="margin-left:0;">
+			            				<div class="col-xs-7" style="border-right:black 1px solid;height:25px;">
+			            					<font color="white">.</font>
+			            				</div>
+			            				<div class="col-xs-5" style="height:25px;">
+				            				<font color="white">.</font>
+				            			</div>
+									</div>
+			            			<div class="row" style="margin-left:0;">
+			            				<div class="col-xs-7" style="border-right:black 1px solid;height:30px;">
+			            					<span style="margin-left:10px;height:25px">Sub Total Excluding VAT</span>
+			            				</div>
+			            				<div class="col-xs-5" style="height:30px;">
+				            				<span class="pull-left" t-field="o.currency_id.symbol"/>
+				            				<span class="pull-right" style="margin-right:10px;" t-field="o.amount_untaxed"/>
+				            			</div>
+									</div>
+									<div class="row" style="margin-left:0;">
+			            				<div class="col-xs-7" style="border-right:black 1px solid;height:30px;">
+			            					<span style="margin-left:10px">VAT (14%)</span>
+			            				</div>
+			            				<div class="col-xs-5" style="height:30px">
+				            				<span class="pull-left" t-field="o.currency_id.symbol"/>
+				            				<span class="pull-right" style="margin-right:10px;" t-esc="o.amount_tax"/>
+				            			</div>
+									</div>
+									<div class="row" style="margin-left:0;">
+			            				<div class="col-xs-7" style="border-right:black 1px solid;height:30px;">
+			            					<span style="margin-left:10px">Total Including VAT</span>
+			            				</div>
+			            				<div class="col-xs-5" style="height:30px;">
+				            				<span class="pull-left" t-field="o.currency_id.symbol"/>
+				            				<span class="pull-right" style="margin-right:10px;" t-esc="o.amount_total"/>
+				            			</div>
+									</div>
+									<div class="row" style="margin-left:0;">
+			            				<div class="col-xs-7" style="border-right:black 1px solid;height:25px;">
+			            					<font color="white">.</font>
+			            				</div>
+			            				<div class="col-xs-5" style="height:25px;">
+				            				<font color="white">.</font>
+				            			</div>
+									</div>
+									<div class="row" style="margin-left:0;">
+			            				<div class="col-xs-7" style="border-top:black 1px solid;border-right:black 1px solid;height:30px;">
+			            					<span style="margin-left:10px;line-height: 200%;">Payment Terms</span>
+			            				</div>
+			            				<div class="col-xs-5 text-center" style="height:30px;border-top:black 1px solid;">
+				            				<span style="line-height: 200%;" t-field="o.partner_id.property_payment_term"/>
+				            			</div>
+			            			</div>
+			            		</td>
+
+			            	</table>
+						</div>
+			     	</t>
+				</div>
+			</t>
+		</template>
+	</data>
+</openerp>

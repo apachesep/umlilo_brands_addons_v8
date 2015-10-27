@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="custom_external_layout">
+			<!-- Multicompany -->
+			<t t-if="o and 'company_id' in o">
+				<t t-set="company" t-value="o.company_id"></t>
+			</t>
+			<t t-if="not o or not 'company_id' in o">
+				<t t-set="company" t-value="res_company"></t>
+			</t>
+			<t t-foreach="docs" t-as="docs">
+				<t t-call="erp_umlilo_report.custom_external_layout_header" />
+				<t t-raw="0" />
+				<t t-call="erp_umlilo_report.custom_external_layout_footer" />
+			</t>
+		</template>
+
+		<template id="custom_external_layout_header">
+			<div class="header">
+				<t t-foreach="docs" t-as="o">
+					<div class="row">
+						<div class="col-xs-9" style="border:1px solid black">
+							<div class="row">
+								<div class="col-xs-12" style="height:60px;">
+									<div class="col-xs-1"></div>
+									<div class="col-xs-3 text-center">
+										<font style="font-size:18;">
+											<strong t-if="docs.state not in ['draft','sent']">SALE ORDER</strong>
+											<strong t-if="docs.state in ['draft','sent']">QUOTATION</strong>
+										</font>
+									</div>
+									<div class="col-xs-1"/>
+									<div class="col-xs-3 text-left">
+										<strong><span style="font-size:18;">JOB :</span></strong>
+										<strong><span style="font-size:18;"><span t-field="o.job_number"/></span></strong>
+									</div>
+									<div class="clo-xs-4" style="margin-top:3px;">
+										<img t-att-src="'/report/barcode/?type=%s&amp;value=%s &amp;width=%s&amp;height=%s' % ('Code128', o.name, 300, 40)"></img>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="col-xs-5">
+										<table style="font-size:12;" class="col-xs-12">
+											<tr>
+												<td class="col-xs-5"><strong>Customer :</strong></td>
+												<td>
+													<strong><span t-if="o.partner_id.is_company is True"><span t-field="o.partner_id"/></span></strong>
+													<strong><span t-if="o.partner_id.is_company is not True and o.partner_id.parent_id"><span t-field="o.partner_id.parent_id"/></span></strong>
+												</td>
+											</tr>
+											<tr>
+												<td class="col-xs-5">Customer Code :</td>
+												<td><span t-field="o.partner_id.customer_code"/></td>
+											</tr>
+											<tr>
+												<td><font color="white">.</font></td>
+												<td><font color="white">.</font></td>
+											</tr>
+											<tr>
+												<td class="col-xs-5">Telephone :</td>
+												<td><span t-field="o.partner_id.phone"/></td>
+											</tr>
+											<tr>
+												<td class="col-xs-5">Customer VAT No:</td>
+												<td><span t-field="o.partner_id.customer_vat_no"/></td>
+											</tr>
+											<tr>
+												<td class="col-xs-5">Customer PO No:</td>
+												<td><span t-field="o.customer_po_no"/></td>
+											</tr>
+											<tr>
+												<td><font color="white">.</font></td>
+												<td><font color="white">.</font></td>
+											</tr>
+											<tr>
+												<td class="col-xs-5">Contact Person :</td>
+												<td>
+													<span t-if="o.partner_id.is_company is True and o.partner_id.child_ids"><span t-field="o.partner_id.child_ids[0].name"/></span>
+													<span t-if="o.partner_id.is_company is not True"><span t-field="o.partner_id.name"/></span>
+												</td>
+											</tr>
+											<tr>
+												<td class="col-xs-5">Contact Email :</td>
+												<td><span t-if="o.partner_id.child_ids"><span t-field="o.partner_id.child_ids[0].email"/></span></td>
+											</tr>
+											<tr>
+												<td class="col-xs-5">Contact Mobile :</td>
+												<td><span t-if="o.partner_id.child_ids"><span t-field="o.partner_id.child_ids[0].mobile"/></span></td>
+											</tr>
+										</table>
+									</div>
+									<div class="col-xs-3" style="font-size:13;">
+		                                <span><b>Invoice Address:</b></span><br/>
+		                                <span t-field="o.partner_id.street"/><br/>
+		                                <span t-field="o.partner_id.street2"/><br/>
+		                                <span t-field="o.partner_id.city"/>,<span t-field="o.partner_id.zip"/><br/>
+		                                <span t-field="o.partner_id.state_id.name"/>,<span t-field="o.partner_id.country_id.name"/><br/>
+	                            	</div>
+	                            	<div class="col-xs-4" style="font-size:13;">
+	                            		<p style="height:20px" t-if="o.state in ['draft', 'sent']"><strong>Quotation No: </strong><span style="margin-left:40px" t-field="o.name"/></p>
+	                            		<p style="height:20px" t-if="o.state not in ['draft', 'sent']"><strong>Sale Order No: </strong><span style="margin-left:35px" t-field="o.name"/></p>
+	                            		<p style="height:20px"><strong>Reference: </strong><span style="margin-left:60px" t-field="o.client_order_ref"/></p>
+	                            		<p style="height:20px"><strong>Date: </strong><span style="margin-left:95px" t-esc="get_date(o.date_order)"/></p>
+	                            		<p style="height:20px"><strong>Payment Terms: </strong><span  style="margin-left:25px" t-field="o.payment_term"/></p>
+	                            		<p style="height:20px"><strong>Sales Person: </strong><span style="margin-left:45px" t-field="o.user_id.name"/></p>
+	                            		<p style="height:20px"><strong>Dispatch Type: </strong><span style="margin-left:35px" t-field="o.dispatch_type"/></p>
+	                            	</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-3">
+							<img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"
+								style="width:270px;height:120px;" />
+							<p><font color="white">.</font></p>
+							<p>Company Registration No. <span t-field="company.company_registry"/></p>
+							<p>VAT Registration No <span style="margin-left:38px" t-field="company.vat_registration_no"/></p>
+							<p>Telephone<span style="margin-left:105px" t-field="company.phone"/></p>
+						</div>
+					</div>
+				</t>
+			</div>
+		</template>
+
+		<template id="custom_external_layout_footer">
+			<div class="footer">
+				<div class="text-center" style="font-size:13;">
+					<p> Unit 25 Constantia Park, 1415 Chris Hani Road, Redhill, Kwazulu Natal, 4071, South Africa.
+						Telephone (031) 569 6971 Facsimile (031) 569 6538 info@umlilobrands.co.za www.umlilobrands.co.za</p>
+				</div>
+			</div>
+		</template>
+	</data>
+</openerp>
